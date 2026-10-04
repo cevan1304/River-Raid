@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="sk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"><title>River Raid · Spitfire · Kampaň v10</title>
+<html lang="sk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"><title>River Raid · Spitfire · Kampaň v11</title>
 <style>
 :root{color-scheme:dark;--gold:#efd18a;--ink:#101c20}*{box-sizing:border-box;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:none}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#08171d;font-family:system-ui,sans-serif;color:#edf3ef}button{font:inherit;color:inherit;cursor:pointer;border:1px solid #ffffff30;background:#172c32;border-radius:10px;padding:8px 11px;-webkit-tap-highlight-color:transparent}button:active,button.down{background:#6a6143;border-color:var(--gold)}button:focus-visible{outline:2px solid var(--gold)}
 #app{position:relative;width:100%;height:100dvh;overflow:hidden;background:radial-gradient(ellipse at center,#122d32,#08171d 78%)}
@@ -35,13 +35,41 @@
 @media(max-width:360px){#hud{padding-left:5px;padding-right:5px;grid-template-rows:19px minmax(0,1fr);gap:4px}.instrument{padding:4px 5px}.dialLabel{letter-spacing:0}.clockValue small{font-size:8px}.cockpitTop .brand small{display:none}.sector{font-size:7px}#options{gap:4px;padding-left:4px;padding-right:4px}}
 @media(max-height:500px){#hud{grid-template-rows:minmax(0,1fr);gap:0;padding:calc(3px + env(safe-area-inset-top)) 6px 3px}.cockpitTop{display:none}#hud .stats{grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:minmax(0,1fr);gap:4px}.instrument{grid-template-rows:12px minmax(17px,1fr) 7px;padding:3px 5px;gap:1px}#hud .stats b{font-size:19px}.dialLabel{font-size:7px;letter-spacing:0}.dialLabel svg{width:11px;height:11px}.meter{height:5px}.dialFoot{height:7px;font-size:6px}.dialFoot strong{font-size:7px}.clockValue small{font-size:7px}#options{height:32px}#options button{font-size:10px;padding:2px 6px}}
 
+
+/* Wide screens keep the portrait playfield tall; instruments flank it. */
+#app.wide #hud{right:auto;grid-template-rows:42px minmax(0,1fr);padding:10px;gap:10px;border:1px solid #829a9440;border-radius:14px}
+#app.wide .cockpitTop{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:5px}
+#app.wide .cockpitTop .brand{font-size:13px;gap:6px}#app.wide .sector{max-width:100%;font-size:8px;text-align:left}
+#app.wide #hud .stats{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:6px}
+#app.wide .instrument{padding:7px 6px;grid-template-rows:16px minmax(20px,1fr) 10px;gap:4px}
+#app.wide .dialLabel{font-size:7px;letter-spacing:0;gap:3px}#app.wide .dialLabel svg{width:12px;height:12px}
+#app.wide .clockValue{flex-wrap:wrap;gap:2px 4px}#app.wide .clockValue small{font-size:9px}
+#app.wide #controls{transform:none;flex-direction:column;align-items:stretch;justify-content:center;gap:10px;padding:10px}
+#app.wide #touchpad{width:100%;height:118px;flex:1;min-height:64px;border-radius:13px}
+#app.wide .padguide{top:calc(50% - 32px);width:64px;height:64px;left:calc(50% - 32px)}
+#app.wide .actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+#app.wide .actions button{height:58px;min-width:0;padding:4px;font-size:12px}
+#app.wide .hint{display:block;order:3;font-size:9px;line-height:1.6}
+#app.wide #options{transform:none;flex-direction:column;gap:6px;padding:7px}
+#app.wide #options button,#app.wide #options #fullBtn{flex:1;font-size:12px;min-height:0}
+#app.wide.compact #hud{padding:7px;grid-template-rows:35px minmax(0,1fr);gap:5px}
+#app.wide.compact .instrument{padding:5px;gap:2px}
+#app.wide.compact #controls{padding:7px;gap:7px}#app.wide.compact .actions button{height:40px;font-size:11px}
+#app.wide.compact .hint{font-size:8px;line-height:1.3}#app.wide.compact #options{padding:5px;gap:4px}
+/* Dialogs use the viewport rather than the narrow canvas. */
+#app>.overlay{padding:16px;overflow:hidden;background:#06161de8}
+#app>.overlay .panel{width:min(570px,100%);max-height:100%;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+#app>.overlay .panel h1{font-size:clamp(25px,4vw,37px);overflow-wrap:break-word}
+#app>.overlay .panel p{font-size:13px}#app>.overlay .eyebrow{font-size:10px}
+@media(max-height:500px){#app>.overlay{padding:10px}#app>.overlay .panel{padding:14px}#app>.overlay .panel h1{margin:5px 0;font-size:25px}#app>.overlay .panel p{margin:6px 0;font-size:11px}}
+
 </style></head><body><div id="app">
 <header id="hud" aria-label="Prístrojová doska"><div class="cockpitTop"><div class="brand">RIVER RAID <small>SPITFIRE</small></div><div class="sector" id="hudSection">1 / 6 · VIDIECKE ÚDOLIE</div></div><div class="stats"><div class="instrument energyDial" id="energyCard"><div class="dialLabel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3-7 10h6l-1 8 9-12h-7z"/></svg>ENERGIA</div><b id="health">100 %</b><div class="meter"><i id="hpfill" style="width:100%"></i></div></div><div class="instrument fuelDial" id="fuelCard"><div class="dialLabel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4h9v17M4 21h11M7 7h5v5H7zM14 11h3v6a2 2 0 0 0 4 0V8l-3-3"/></svg>PALIVO</div><b id="fuel">100 %</b><div class="meter"><i id="fuelFill" style="width:100%"></i></div></div><div class="instrument ammoDial" id="ammoCard"><div class="dialLabel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V8l2-4 2 4v12zM15 20V8l2-4 2 4v12zM5 16h4m6 0h4"/></svg>NÁBOJE</div><b id="ammo">800</b><div class="meter"><i id="ammoFill" style="width:50%"></i></div></div><div class="instrument bombDial" id="bombCard"><div class="dialLabel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6 3-3m-2 5 4-4m-8 1 5 5M7 8c-6 4-4 12 3 13 7 1 12-8 6-12M6 13l5-3"/></svg>BOMBY</div><b id="bombs">20</b><div class="meter"><i id="bombFill" style="width:50%"></i></div></div><div class="instrument scoreDial" id="scoreCard"><div class="dialLabel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg>SKÓRE</div><b id="score">0</b><div class="dialFoot">CIELE <strong id="killCount">0</strong></div></div><div class="instrument clockDial" id="clockCard"><div class="dialLabel"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>ČAS LETU</div><div class="clockValue"><b id="flightTime">0:00</b><small>/ 9:00</small></div><div class="meter"><i id="timeFill" style="width:0%"></i></div></div></div></header><div id="safeInset" aria-hidden="true"></div>
 <div id="stage" class="crt"><canvas id="game" aria-label="River Raid testovacia hra"></canvas><div id="toast"></div>
+</div>
 <div class="overlay" id="intro"><div class="panel"><div class="eyebrow">KAMPAŇ · ŠESŤ ÚSEKOV · 9 MINÚT</div><h1>Spitfire nad riekou</h1><p>Preleť od vidieckych fariem cez lesy, roklinu, okupované mesto a prístav až k pevnosti. Úseky nadväzujú plynulo. Na konci znič opevnený most dvoma bombami.</p><p><b>Streľba:</b> medzerník alebo STREĽBA. Dosah je polovica výšky herného obrazu.<br><b>Bomba:</b> X / B alebo BOMBA. Dopadne do kruhu pred lietadlom.<br><b>Pohyb:</b> touchpad alebo šípky / WASD. Bunkre a mosty znič bombou. Nad bočnými časťami mostov môžeš bezpečne preletieť. Každý zásah uberie 10 % energie.</p><p id="loading">Načítavam modely…</p><div class="buttons"><button class="primary" id="start" disabled>Začať let</button><button id="introFull">Celá obrazovka</button></div></div></div>
 <div class="overlay hidden" id="end"><div class="panel"><div class="eyebrow">VÝSLEDOK MISIE</div><h1 id="endTitle"></h1><p id="endText"></p><div id="targetList"></div><div class="buttons"><button class="primary" id="restart">Letieť znova</button></div></div></div>
 <div class="overlay hidden" id="pause"><div class="panel"><div class="eyebrow">LET POZASTAVENÝ</div><h1>Pauza</h1><p>Palubná streľba má dosah polovice obrazovky. Bunkre zničíš iba bombou. Každý zásah uberie 10 % energie. Bomba zasiahne pozemné a vodné ciele v okolí zameriavača. Nepriateľské lietadlá bombou nezasiahneš.</p><div class="buttons"><button class="primary" id="resume">Pokračovať</button><button id="pauseRestart">Reštartovať let</button></div></div></div>
-</div>
 <footer id="controls"><div id="touchpad" role="application" aria-label="Touchpad na ovládanie lietadla"><span class="padguide"></span><span id="touchKnob"></span><span class="padlabel">TOUCHPAD</span></div><div class="hint">Touchpad / Šípky / WASD · Medzerník: streľba · X / B: bomba · P: pauza<br><span style="color:#ddcc9b">Žltý kruh = miesto dopadu bomby</span></div><div class="actions"><button class="fire" data-key="fire">STREĽBA</button><button class="bomb" id="bombBtn">BOMBA</button></div></footer><nav id="options" class="topButtons" aria-label="Nastavenia hry"><button id="autoBtn">Auto: nie</button><button id="soundBtn">Zvuk: áno</button><button id="pauseBtn">Pauza</button><button id="crtBtn">CRT: áno</button><button id="fullBtn" aria-label="Celá obrazovka">Fullscreen</button></nav><div id="safeBottom" aria-hidden="true"></div><div class="progress"><i id="progress"></i></div>
 </div><script>
 'use strict';
@@ -283,12 +311,31 @@ function roadX(z,side){const r=river(z);return r.c+side*(r.w/2+98)}
 function sy(z){return H-(z-scroll)}
 function worldPlayer(){return scroll+H-player.y}
 function notify(text,duration=3){el('toast').textContent=text;el('toast').style.opacity=1;toastUntil=time+duration}
-function computeLayout(width,height,headerHeight,controlsHeight,optionsHeight=38,safeBottom=0){const gap=8,settingsGap=6,progressHeight=4,bottom=6+safeBottom,optionsY=height-progressHeight-bottom-optionsHeight,controlsY=optionsY-settingsGap-controlsHeight,gameBottom=controlsY-gap;
+function computeLayout(width,height,headerHeight,controlsHeight,optionsHeight=38,safeBottom=0,safeTop=0){
+ const wide=width>=740&&width>=height*1.15;
+ if(wide){
+  const gutter=width>=1100?16:10,side=clamp(width*.18,164,244),top=12+safeTop,bottom=12+safeBottom;
+  const availableHeight=Math.max(60,height-top-bottom-4),availableWidth=width-2*side-4*gutter;
+  const fit=Math.min(availableWidth/W,availableHeight/H),gameWidth=W*fit,gameHeight=H*fit,x=(width-gameWidth)/2,y=top+(availableHeight-gameHeight)/2;
+  const compact=height<600,hudHeight=Math.min(gameHeight,compact?380:480),controlHeight=Math.min(compact?200:268,gameHeight*.55),settingsHeight=Math.min(compact?142:200,gameHeight-controlHeight-10);
+  const controlsX=x+gameWidth+gutter,controlsY=y+(gameHeight-controlHeight-settingsHeight-10)/2;
+  return {wide,compact,x,y,width:gameWidth,height:gameHeight,hudX:x-gutter-side,hudY:y+(gameHeight-hudHeight)/2,hudWidth:side,hudHeight,controlsX,controlsY,controlsWidth:side,controlsHeight:controlHeight,optionsX:controlsX,optionsY:controlsY+controlHeight+10,optionsWidth:side,optionsHeight:settingsHeight};
+ }
+ const gap=8,settingsGap=6,progressHeight=4,bottom=6+safeBottom,optionsY=height-progressHeight-bottom-optionsHeight,controlsY=optionsY-settingsGap-controlsHeight,gameBottom=controlsY-gap;
  const available=Math.max(60,gameBottom-headerHeight-gap),fit=Math.min(width/W,available/H),gameWidth=W*fit,gameHeight=H*fit,y=gameBottom-gameHeight,controlsWidth=Math.min(width,Math.max(374,gameWidth));
- return {x:(width-gameWidth)/2,y,width:gameWidth,height:gameHeight,hudHeight:Math.max(40,y-gap),controlsY,controlsWidth,optionsY,optionsWidth:controlsWidth}}
-function resize(){const b=el('app').getBoundingClientRect(),safeInset=el('safeInset').getBoundingClientRect().height,safeBottom=el('safeBottom').getBoundingClientRect().height,minimumHud=(b.height<=500?62:b.width<=360?154:b.width<=720?164:108)+safeInset,layout=computeLayout(b.width,b.height,minimumHud,el('controls').getBoundingClientRect().height,el('options').getBoundingClientRect().height,safeBottom),dpr=Math.min(1.25,devicePixelRatio||1),stage=el('stage'),head=el('hud');
- head.style.height=layout.hudHeight+'px';head.style.setProperty('--dial-size',clamp((layout.hudHeight-safeInset-42)/(b.width<=720?5:2.5),20,28)+'px');stage.style.left=layout.x+'px';stage.style.top=layout.y+'px';stage.style.width=layout.width+'px';stage.style.height=layout.height+'px';el('controls').style.top=layout.controlsY+'px';el('controls').style.width=layout.controlsWidth+'px';el('options').style.top=layout.optionsY+'px';el('options').style.width=layout.optionsWidth+'px';
- canvas.style.width=layout.width+'px';canvas.style.height=layout.height+'px';canvas.width=Math.round(layout.width*dpr);canvas.height=Math.round(layout.height*dpr);viewport.scale=Math.min(canvas.width/W,canvas.height/H);viewport.x=(canvas.width-W*viewport.scale)/2;viewport.y=(canvas.height-H*viewport.scale)/2;render()}
+ return {wide:false,compact:false,x:(width-gameWidth)/2,y,width:gameWidth,height:gameHeight,hudX:0,hudY:0,hudWidth:width,hudHeight:Math.max(40,y-gap),controlsX:width/2,controlsY,controlsWidth,optionsX:width/2,optionsY,optionsWidth:controlsWidth};
+}
+function resize(){
+ const app=el('app'),b=app.getBoundingClientRect(),safeInset=el('safeInset').getBoundingClientRect().height,safeBottom=el('safeBottom').getBoundingClientRect().height,wide=b.width>=740&&b.width>=b.height*1.15;
+ app.classList.toggle('wide',wide);app.classList.toggle('compact',wide&&b.height<600);
+ const controls=el('controls'),options=el('options');controls.style.height='';options.style.height='';
+ const minimumHud=(b.height<=500?62:b.width<=360?154:b.width<=720?164:108)+safeInset,layout=computeLayout(b.width,b.height,minimumHud,controls.getBoundingClientRect().height,options.getBoundingClientRect().height,safeBottom,safeInset),dpr=Math.min(1.25,devicePixelRatio||1),stage=el('stage'),head=el('hud');
+ head.style.left=layout.hudX+'px';head.style.top=layout.hudY+'px';head.style.width=layout.hudWidth+'px';head.style.height=layout.hudHeight+'px';head.style.setProperty('--dial-size',(wide?clamp((layout.hudWidth-26)/7,20,28):clamp((layout.hudHeight-safeInset-42)/(b.width<=720?5:2.5),20,28))+'px');
+ stage.style.left=layout.x+'px';stage.style.top=layout.y+'px';stage.style.width=layout.width+'px';stage.style.height=layout.height+'px';
+ controls.style.left=layout.controlsX+'px';controls.style.top=layout.controlsY+'px';controls.style.width=layout.controlsWidth+'px';options.style.left=layout.optionsX+'px';options.style.top=layout.optionsY+'px';options.style.width=layout.optionsWidth+'px';
+ if(wide){controls.style.height=layout.controlsHeight+'px';options.style.height=layout.optionsHeight+'px'}
+ canvas.style.width=layout.width+'px';canvas.style.height=layout.height+'px';canvas.width=Math.round(layout.width*dpr);canvas.height=Math.round(layout.height*dpr);viewport.scale=Math.min(canvas.width/W,canvas.height/H);viewport.x=(canvas.width-W*viewport.scale)/2;viewport.y=(canvas.height-H*viewport.scale)/2;render();
+}
 
 window.addEventListener('resize',resize);new ResizeObserver(resize).observe(el('app'));window.visualViewport?.addEventListener('resize',resize);
 function initAudio(){if(audio)return;try{audio=new (window.AudioContext||window.webkitAudioContext)();engine=audio.createOscillator();engine.type='sawtooth';engine.frequency.value=63;engineGain=audio.createGain();engineGain.gain.value=0;engine.connect(engineGain);engineGain.connect(audio.destination);engine.start()}catch(e){}}
